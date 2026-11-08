@@ -134,6 +134,10 @@ footer{font-size:11.5px;color:#333;padding:12px 4px 30px}
 .pbox-blue{background:#f5faff;border-color:#cedff2} .pbox-blue .pbox-title{background:#cedff2;border-color:#a3bfb1}
 .pbox-grey{background:#fcfcfc;border-color:#ccc}     .pbox-grey .pbox-title{background:#eee;border-color:#ccc}
 .pbox-green{background:#f5fffa;border-color:#c6e5c6} .pbox-green .pbox-title{background:#cef2e0;border-color:#a3bfb1}
+/* 눈에 덜 띄는 박스 (Recent changes): 배경·색 없이 얇은 테두리, 작은 회색 제목 */
+.pbox-plain{background:transparent;border-color:#e3e5e8}
+.pbox-plain .pbox-title{background:transparent;border:0;border-bottom:1px solid #e3e5e8;color:var(--muted);font-weight:normal;font-size:12.5px}
+.pbox-plain .recent a{color:var(--muted)}
 .pdesc{color:var(--muted);font-size:12.5px}
 .empty{color:#888;font-style:italic}
 .more{text-align:right}

@@ -14,7 +14,7 @@
     #more(wlink("user-jinju")[→ More about me])
   ]
 ][
-  #portal-box("Recent changes", color: "green", id: "recent-changes", recent-changes(n: 3))
+  #portal-box("Recent changes", color: "plain", id: "recent-changes", recent-changes(n: 3))
 ]
 
 #portal-grid()
