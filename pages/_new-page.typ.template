@@ -4,6 +4,7 @@
 #show: wiki-page.with(
   title: "Page title",
   categories: ("STM32",),   // 끝에 쉼표!
+  created: "2026-11-08",    // 처음 쓴 날 (제목 밑에 표시)
   // order: 3,
   // hatnote: [For the bus, see #wlink("i2c")[I²C].],
 )

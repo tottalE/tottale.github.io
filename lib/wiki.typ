@@ -371,7 +371,16 @@
 }
 
 // ---------- 페이지 전체: HTML (위키 사이트) ----------
-#let html-page(title: "", hatnote: none, categories: (), main-page: false, body) = {
+// 제목 밑 날짜 줄: "Created 2026-11-01 · Last edited 2026-11-08"
+#let date-line(created, edited) = {
+  let c = if created == none { none } else { str(created) }
+  let parts = ()
+  if c != none { parts.push("Created " + c) }
+  if edited != none and edited != c { parts.push("Last edited " + edited) }
+  parts.join(" · ", default: "")
+}
+
+#let html-page(title: "", hatnote: none, categories: (), main-page: false, created: none, body) = {
   // = 제목 → <h2 id="...">  (h1 은 문서 제목용)
   show heading: it => html.elem(
     "h" + str(calc.min(it.level + 1, 6)),
@@ -478,7 +487,7 @@
       html.elem("main", attrs: (class: if main-page { "mainpage" } else { "article" }), {
         if not main-page {
           html.elem("h1", title)
-          html.elem("div", attrs: (class: "tagline"), "From " + site.name + ", " + lower(site.tagline.slice(0, 1)) + site.tagline.slice(1))
+          html.elem("div", attrs: (class: "tagline"), date-line(created, if me != none { me.updated } else { none }))
         }
         if hatnote != none { html.elem("div", attrs: (class: "hatnote"), hatnote) }
 
@@ -513,7 +522,7 @@
 }
 
 // ---------- 페이지 전체: 보고서 모양 (VS Code / Tinymist 미리보기) ----------
-#let paged-page(title: "", hatnote: none, categories: (), main-page: false, body) = {
+#let paged-page(title: "", hatnote: none, categories: (), main-page: false, created: none, body) = {
   set page(paper: "a4", margin: (x: 2.2cm, y: 2.2cm), numbering: "1")
   set text(size: 10.5pt)
   set par(justify: true)
@@ -534,7 +543,7 @@
   v(-0.6em)
   line(length: 100%, stroke: 0.6pt + luma(160))
   v(-0.3em)
-  text(size: 9pt, fill: muted, "From " + site.name + ", " + lower(site.tagline.slice(0, 1)) + site.tagline.slice(1))
+  if not main-page { text(size: 9pt, fill: muted, date-line(created, none)) }
   if hatnote != none { pad(left: 1.5em, text(fill: muted, emph(hatnote))) }
 
   body
@@ -553,6 +562,7 @@
   categories: (),
   main-page: false,   // true 면 메인 포털 (제목/카테고리 줄 숨김)
   order: none,        // 카테고리 안에서의 순서 (1, 2, 3...). 없으면 제목 가나다순
+  created: none,      // 처음 쓴 날 "2026-11-08" (제목 밑에 표시)
   body,
 ) = {
   set document(title: if main-page { site.name } else { title + " — " + site.name })
@@ -562,6 +572,6 @@
 
   show raw.where(lang: "mermaid"): it => draw(mermaid-block(it))
 
-  let args = (title: title, hatnote: hatnote, categories: categories, main-page: main-page)
+  let args = (title: title, hatnote: hatnote, categories: categories, main-page: main-page, created: created)
   context if is-html() { html-page(..args, body) } else { paged-page(..args, body) }
 }

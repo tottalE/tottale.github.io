@@ -12,3 +12,7 @@ GUIDE.pdf
 # 개인 작업 메모 (공개 X)
 CLAUDE.md
 .claude/
+
+# 개인 노트 (Obsidian / InkyCap) 와 InkyCap 설정 — 사이트·GitHub 에 안 올림
+notes/
+.inkycap/

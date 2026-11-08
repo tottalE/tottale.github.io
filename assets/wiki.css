@@ -111,6 +111,10 @@ table.infobox{float:right;clear:right;width:290px;margin:0 0 16px 20px;border:1p
 .toc .num{color:var(--text);padding-right:4px}
 
 /* tables, refs, categories */
+/* Markdown 표도 위키 표 모양으로 */
+main table:not(.infobox):not(.wikitable){border-collapse:collapse;background:var(--box);font-size:13.5px;margin:10px 0}
+main table:not(.infobox):not(.wikitable) :is(th,td){border:1px solid var(--border);padding:4px 9px;text-align:left}
+main table:not(.infobox):not(.wikitable) th{background:#eaecf0}
 table.wikitable{border-collapse:collapse;background:var(--box);font-size:13.5px;margin:10px 0}
 table.wikitable th,table.wikitable td{border:1px solid var(--border);padding:4px 9px;text-align:left}
 table.wikitable th{background:#eaecf0}

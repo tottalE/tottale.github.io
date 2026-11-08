@@ -20,10 +20,11 @@
   // 문서의 categories: 에 같은 이름을 쓰면 그 박스에 자동으로 들어가요.
   portal: (
     ("STM32", ""),
+    ("MCU Basics", ""),
     ("Peripherals", "UART, I²C, SPI, timers, ADC, DMA"),
     ("C Programming", "Embedded C: pointers, volatile, bit operations"),
     ("Literatures", ""),
     ("Projects", "Things I built"),
-    ("Lab notes", "Problems I hit and how I solved them"),
+    ("Courses", "Courses I've taken at HAW."),
   ),
 )
