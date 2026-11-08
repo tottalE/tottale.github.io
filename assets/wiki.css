@@ -137,6 +137,12 @@ footer{font-size:11.5px;color:#333;padding:12px 4px 30px}
 .pdesc{color:var(--muted);font-size:12.5px}
 .empty{color:#888;font-style:italic}
 .more{text-align:right}
+.row{display:grid;gap:0 12px;align-items:stretch}
+.row > .pbox{display:flex;flex-direction:column}
+.row > .pbox > .pbox-body{flex:1}
+.row ul.recent{margin:2px 0;font-size:12.5px}
+.row ul.recent li{padding:1px 0}
+.row ul.recent .date{display:block;font-size:11px;line-height:1.2}
 .portal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 12px}
 ul.recent{list-style:none;padding-left:0}
 ul.recent .date{color:var(--muted);font-family:Menlo,Consolas,monospace;font-size:12px;margin-right:6px}
@@ -163,6 +169,7 @@ ul.recent .date{color:var(--muted);font-family:Menlo,Consolas,monospace;font-siz
   form.search{flex:1;margin:6px 0}
   form.search input{flex:1;width:auto}
   main{padding:12px 16px;border-left:0;border-right:0}
+  .row{grid-template-columns:1fr !important}
   table.infobox{float:none;width:100%;margin:0 0 16px}
   footer{padding:12px 16px}
 }

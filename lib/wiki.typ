@@ -354,6 +354,17 @@
   }
 }
 
+// 두 칸 나란히 (예: 메인의 About me | Recent changes). 좁은 화면에선 위아래로
+// 사용법: #side-by-side(columns: (2fr, 1fr))[왼쪽][오른쪽]
+#let side-by-side(columns: (2fr, 1fr), left, right) = context {
+  if is-html() {
+    let cols = columns.map(c => str(c / 1fr) + "fr").join(" ")
+    html.elem("div", attrs: (class: "row", style: "grid-template-columns:" + cols), { left; right })
+  } else {
+    grid(columns: columns, gutter: 8pt, left, right)
+  }
+}
+
 // 오른쪽 정렬 작은 링크 줄 (예: → More about me)
 #let more(body) = context {
   if is-html() { html.elem("p", attrs: (class: "more"), body) } else { align(right, body) }

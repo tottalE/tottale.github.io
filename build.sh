@@ -32,7 +32,7 @@ for f in sorted(os.listdir("build/meta")):
     src = f"pages/{name}.typ"
     date = ""
     try:
-        date = subprocess.run(["git", "log", "-1", "--format=%cs", "--", src],
+        date = subprocess.run(["git", "log", "-1", "--format=%cd", "--date=short", "--", src],
                               capture_output=True, text=True).stdout.strip()
     except FileNotFoundError:
         pass

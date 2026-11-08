@@ -7,16 +7,16 @@
   a personal wiki about embedded systems and #wlink("stm32")[STM32] microcontrollers.
 ]
 
-#portal-box("About me", color: "blue")[
-  Hi, I'm *Jinju* — a Korean engineering student in Germany, learning #wlink("embedded-systems")[embedded systems] by reading reference manuals and building small projects on #wlink("stm32")[STM32]. This wiki is my notebook: short notes, things I got stuck on, and the #wlink("projects")[projects] I built.
+#side-by-side(columns: (2fr, 1fr))[
+  #portal-box("About me", color: "blue")[
+    Hi, I'm *Jinju* — a Korean engineering student in Germany, learning #wlink("embedded-systems")[embedded systems] by reading reference manuals and building small projects on #wlink("stm32")[STM32]. This wiki is my notebook: short notes, things I got stuck on, and the #wlink("projects")[projects] I built.
 
-  #more(wlink("user-jinju")[→ More about me])
+    #more(wlink("user-jinju")[→ More about me])
+  ]
+][
+  #portal-box("Recent changes", color: "green", id: "recent-changes", recent-changes(n: 5))
 ]
 
 #portal-grid()
 
 #more(link("categories.html")[→ All categories])
-
-#portal-box("Recent changes", color: "green", id: "recent-changes", recent-changes(n: 8))
-
-
