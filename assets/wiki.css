@@ -1,0 +1,168 @@
+/* JinjuWiki — classic MediaWiki (Vector legacy) look */
+:root{
+  --text:#202122; --muted:#54595d; --link:#0645ad; --link-visited:#0b0080; --red:#ba0000;
+  --border:#a2a9b1; --frame:#a7d7f9; --bg:#ffffff; --bg-page:#f6f6f6; --box:#f8f9fa;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:sans-serif;color:var(--text);background:var(--bg-page);font-size:14px;line-height:1.6}
+a{color:var(--link);text-decoration:none} a:visited{color:var(--link-visited)} a:hover{text-decoration:underline}
+a.new,a.new:visited{color:var(--red)}
+
+/* ---------- layout ---------- */
+#page{display:flex;min-height:100vh}
+html{scroll-behavior:smooth}
+/* 사이드바는 스크롤해도 따라옴 (Read the Docs 처럼) */
+#side{width:176px;flex-shrink:0;padding:0 0 30px 8px;font-size:12.5px;
+  position:sticky;top:0;align-self:flex-start;max-height:100vh;overflow-y:auto;scrollbar-width:thin}
+#right{flex:1;min-width:0;padding-right:16px}
+
+/* logo (top-left, like MediaWiki) */
+.logo,.logo:visited{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:160px;padding:14px 6px 10px;color:var(--text);text-align:center;gap:6px}
+.logo:hover{text-decoration:none}
+.logo-mark{width:72px;height:72px;border-radius:50%;border:3px double #555;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#fff,#ddd);font-family:"Linux Libertine",Georgia,"Times New Roman",serif;
+  font-size:40px;font-weight:bold;color:#333;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.logo-img{width:80px;height:80px;object-fit:cover;image-rendering:pixelated}
+.logo-img[src$=".jpg"],.logo-img[src$=".jpeg"],.logo-img[src$=".png"]{border-radius:50%;width:76px;height:76px;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.logo-text{font-family:"Libertinus Serif","Linux Libertine",Georgia,"Times New Roman",serif;font-size:19px;line-height:1.1}
+.logo-text small{display:block;font-size:10.5px;color:var(--muted);margin-top:3px}
+
+/* sidebar portlets */
+.portlet{padding:0 8px 0 12px;margin-bottom:10px}
+.portlet h3{font-size:12px;color:#444;font-weight:normal;margin:8px 0 4px;padding:0 0 2px;
+  border-bottom:1px solid transparent;border-image:linear-gradient(to right,rgba(200,204,209,0),#c8ccd1 33%,#c8ccd1 66%,rgba(200,204,209,0)) 1}
+.portlet ul{list-style:none;margin:0;padding:0 0 0 6px} .portlet li{padding:2px 0;line-height:1.3}
+/* category tree — 다른 메뉴와 같은 톤: hover 는 밑줄만, 현재 문서는 굵게 */
+.tree details{margin:1px 0 1px 6px;interpolate-size:allow-keywords}
+.tree summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;padding:2px 0;color:var(--link)}
+.tree summary::-webkit-details-marker{display:none}
+.tree summary::before{content:"";flex:none;border-left:5px solid #8a8f98;border-top:4px solid transparent;border-bottom:4px solid transparent;
+  transition:transform .2s ease}
+.tree details[open] > summary::before{transform:rotate(90deg)}
+.tree summary:hover{text-decoration:underline}
+.tree details[open] > summary{color:var(--text)}
+.tree .count{color:#8a8f98;font-size:11px}
+.tree details::details-content{height:0;overflow:clip;transition:height .2s ease,content-visibility .2s allow-discrete}
+.tree details[open]::details-content{height:auto}
+.tree details ul{padding:0 0 0 12px;margin:1px 0 4px}
+.tree details li{padding:2px 0}
+.tree li.cur > a{color:var(--text);font-weight:bold}
+.tree li.empty{color:#888;font-style:italic}
+.tree li.catpage a{color:#777;font-size:11.5px}
+.tree ul.subtoc{border-left:1px solid #c8ccd1;margin:2px 0 3px 2px;padding-left:8px;font-size:11.5px}
+.tree ul.subtoc li{padding:1px 0}
+.tree ul.subtoc a.active{color:var(--text)}
+
+/* tabs bar above the content */
+#head{display:flex;justify-content:space-between;align-items:flex-end;height:40px;margin-top:20px;gap:12px}
+#head .tabs{display:flex;align-items:flex-end;gap:1px;height:100%}
+#head .tabs > span,#head .tabs > a{display:block;padding:14px 10px 5px;font-size:12.5px;line-height:1;
+  background:linear-gradient(to bottom,rgba(167,215,249,0) 0,var(--frame) 100%);background-size:1px 100%;
+  background-repeat:no-repeat;background-position:right bottom;
+  background-color:transparent;background-image:linear-gradient(to top,#eaf3ff 0,#fff 100%)}
+#head .tabs > span.on{background:#fff;color:#333;border:1px solid var(--frame);border-bottom:1px solid #fff;margin-bottom:-1px}
+#head .tabs > a{border-top:1px solid #e0edf8;border-left:1px solid #e0edf8;border-right:1px solid #e0edf8}
+form.search{display:flex;align-items:center;margin:0 0 4px 10px}
+form.search input{width:190px;padding:4px 6px;font-size:13px;border:1px solid var(--border);border-right:0;border-radius:2px 0 0 2px}
+form.search button{padding:4px 8px;font-size:13px;border:1px solid var(--border);background:#f8f9fa;border-radius:0 2px 2px 0;cursor:pointer}
+
+/* content frame */
+main{background:var(--bg);border:1px solid var(--frame);padding:16px 24px 30px;color:var(--text)}
+
+h1,h2{font-family:"Linux Libertine",Georgia,"Times New Roman",serif;font-weight:normal;border-bottom:1px solid var(--border);line-height:1.3}
+h1{font-size:28.8px;margin:0;padding-bottom:2px}
+h2{font-size:21px;margin:22px 0 6px;padding-bottom:1px}
+h3{font-size:16px;margin:16px 0 4px}
+.tagline{font-size:12.5px;color:var(--muted);margin:4px 0 12px}
+.hatnote{font-style:italic;color:var(--muted);padding-left:24px;margin-bottom:10px}
+sup.ref{font-size:11px;line-height:0}
+pre{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:3px;padding:10px 12px;overflow-x:auto;font-size:13px;line-height:1.4}
+code{font-family:Menlo,Consolas,monospace;font-size:13px}
+:not(pre) > code{background:#f3f4f6;padding:1px 4px;border-radius:3px}
+/* 메모 상자 (#tip, #warning ...) — alertoni 스타일: 얇은 둥근 테두리, 제목은 테두리 위에 */
+.callout{--tint:color-mix(in srgb,var(--c) 7%,#fff);position:relative;border:1.5px solid var(--c);border-radius:5px;
+  background:var(--tint);padding:10px 12px 6px;margin:20px 0 14px}
+.callout-title{position:absolute;top:-0.8em;left:8px;margin:0;padding:0 4px;background:linear-gradient(#fff 50%,var(--tint) 50%);
+  color:var(--c);font-weight:bold;font-size:13px;line-height:1.5}
+.callout > p:first-child,.callout-title + p{margin-top:0}
+.callout > p:last-child{margin-bottom:0}
+
+/* #draw[...] 그림: 화면보다 크면 줄이기 */
+.draw{margin:12px 0;overflow-x:auto;text-align:center}
+.draw svg{max-width:100%;height:auto;display:inline-block}
+
+/* infobox */
+table.infobox{float:right;clear:right;width:290px;margin:0 0 16px 20px;border:1px solid var(--border);background:var(--box);
+  font-size:12.5px;line-height:1.45;border-spacing:3px}
+.infobox caption{font-size:16px;font-weight:bold;padding:6px}
+.infobox th{text-align:left;vertical-align:top;padding:4px 6px;width:38%}
+.infobox td{padding:4px 6px;vertical-align:top}
+.infobox td.photo{text-align:center}
+.infobox td.photo img{max-width:240px;height:auto}
+.infobox .cap{font-size:12px;margin-top:4px}
+.infobox td.sect{background:#dde4f0;text-align:center;font-weight:bold}
+
+/* toc */
+.toc{display:inline-block;border:1px solid var(--border);background:var(--box);padding:7px 16px 7px 10px;font-size:13px;margin:8px 0 10px}
+.toc b{display:block;text-align:center;margin-bottom:4px}
+.toc ul{list-style:none;margin:0;padding:0}
+.toc li.lv2{padding-left:20px}
+.toc .num{color:var(--text);padding-right:4px}
+
+/* tables, refs, categories */
+table.wikitable{border-collapse:collapse;background:var(--box);font-size:13.5px;margin:10px 0}
+table.wikitable th,table.wikitable td{border:1px solid var(--border);padding:4px 9px;text-align:left}
+table.wikitable th{background:#eaecf0}
+ol.refs{font-size:12.5px} ol.refs a.back{padding-right:2px}
+.prevnext{clear:both;display:flex;justify-content:space-between;gap:12px;margin-top:28px;padding-top:8px;border-top:1px solid #eaecf0;font-size:13px}
+.prevnext span{flex:1} .prevnext span:last-child{text-align:right} .prevnext .pn-cat{text-align:center;flex:0 0 auto;color:var(--muted)}
+.catlinks{clear:both;margin-top:28px;border:1px solid var(--border);background:var(--box);padding:5px 8px;font-size:12.5px}
+ul.catlist{columns:3 200px}
+footer{font-size:11.5px;color:#333;padding:12px 4px 30px}
+
+/* ---------- main page portal ---------- */
+.welcome{text-align:center;background:#f5faff;border:1px solid #cedff2;padding:12px 10px 10px;margin-bottom:12px}
+.welcome-title{font-family:"Linux Libertine",Georgia,"Times New Roman",serif;font-size:27px;line-height:1.3}
+.welcome .count{font-size:12px;color:var(--muted);margin-top:4px}
+.pbox{border:1px solid;margin-bottom:12px;break-inside:avoid}
+.pbox-title{font-family:sans-serif;font-size:15px;font-weight:bold;margin:0;padding:4px 10px;border:1px solid}
+.pbox-title a,.pbox-title a:visited{color:inherit}
+.pbox-body{padding:6px 12px 8px}
+.pbox-body ul{margin:4px 0;padding-left:20px}
+.pbox-body p{margin:4px 0}
+.pbox-blue{background:#f5faff;border-color:#cedff2} .pbox-blue .pbox-title{background:#cedff2;border-color:#a3bfb1}
+.pbox-grey{background:#fcfcfc;border-color:#ccc}     .pbox-grey .pbox-title{background:#eee;border-color:#ccc}
+.pbox-green{background:#f5fffa;border-color:#c6e5c6} .pbox-green .pbox-title{background:#cef2e0;border-color:#a3bfb1}
+.pdesc{color:var(--muted);font-size:12.5px}
+.empty{color:#888;font-style:italic}
+.more{text-align:right}
+.portal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 12px}
+ul.recent{list-style:none;padding-left:0}
+ul.recent .date{color:var(--muted);font-family:Menlo,Consolas,monospace;font-size:12px;margin-right:6px}
+.allcats{text-align:right;font-size:12.5px;margin:0}
+
+@media (max-width:820px){
+  #page{flex-direction:column}
+  #side{width:auto;padding:0;position:static;max-height:none;overflow:visible}
+  .logo,.logo:visited{flex-direction:row;min-height:0;padding:10px 16px 6px;gap:10px;justify-content:flex-start;text-align:left}
+  .logo-mark{width:40px;height:40px;font-size:22px}
+  .logo-img{width:44px !important;height:44px !important}
+  .logo-text{font-size:20px}
+  .logo-text small{font-size:11px;margin-top:2px}
+  /* 좁은 화면: Navigation 메뉴만 한 줄 링크로, 나머지 메뉴는 숨김 */
+  .portlet{display:none}
+  #side .portlet:first-of-type{display:block;padding:0 16px 8px;margin:0}
+  #side .portlet:first-of-type h3{display:none}
+  #side .portlet:first-of-type ul{display:flex;flex-wrap:wrap;gap:4px 14px;padding:0;font-size:13px}
+  /* 바로 아래 탭(Main Page / User page)과 겹치는 링크는 숨김 */
+  #side .portlet:first-of-type li:has(a[href="index.html"]),
+  #side .portlet:first-of-type li:has(a[href="user-jinju.html"]){display:none}
+  #right{padding:0}
+  #head{margin-top:0;padding:0 8px;height:auto;flex-wrap:wrap}
+  form.search{flex:1;margin:6px 0}
+  form.search input{flex:1;width:auto}
+  main{padding:12px 16px;border-left:0;border-right:0}
+  table.infobox{float:none;width:100%;margin:0 0 16px}
+  footer{padding:12px 16px}
+}

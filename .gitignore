@@ -1,0 +1,14 @@
+# 빌드 결과물 — GitHub Actions 가 push 할 때마다 새로 만들어요. 올릴 필요 없음.
+public/
+build/
+
+# 맥이 자동으로 만드는 파일
+.DS_Store
+
+./.claude
+./CLAUDE.md
+./GUIDE.md
+GUIDE.pdf
+# 개인 작업 메모 (공개 X)
+CLAUDE.md
+.claude/

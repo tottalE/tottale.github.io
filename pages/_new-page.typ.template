@@ -1,0 +1,50 @@
+#import "../lib/wiki.typ": *
+// 복사 → pages/이름.typ 로 저장. 쓸 부분만 주석 풀기 (VS Code: Cmd + /)
+
+#show: wiki-page.with(
+  title: "Page title",
+  categories: ("STM32",),   // 끝에 쉼표!
+  // order: 3,
+  // hatnote: [For the bus, see #wlink("i2c")[I²C].],
+)
+
+*Page title* is ...
+
+// #infobox(title: "STM32F4", ("Core", [Cortex-M4]), section("Memory"), ("Flash", [1 MB]))
+// #toc()
+
+= Section
+...
+
+// #wlink("uart")[UART]                       위키 링크
+// #link("https://st.com")[ST]                 웹 링크
+// text.#note[RM0090, p. 152]                  출처 (끝에 References 풀기)
+
+// #tip[...]  #info[...]  #important[...]  #warning(title: "Pitfall")[...]  #caution(title: none)[...]
+
+// #wikitable(columns: 2, [Pin], [Use], [PA9], [TX])
+
+// #figure(image("/assets/board.jpg", width: 60%), caption: [Board])
+
+// ```c
+// RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+// ```
+
+// ```mermaid
+// flowchart LR
+//   MCU -->|I2C| Sensor
+// ```
+
+// 패키지 그림은 #draw(...) 로 감싸기
+// #import "@preview/wavy:0.1.3"
+// #draw(wavy.render(`{signal: [{name: "TX", wave: "1.0==1", data: ["D0","D1"]}]}`.text))
+// #import "@preview/bytefield:0.0.9": bytefield, bitheader, bit, bits
+// #draw(bytefield(bpr: 16, bitheader("bounds"), bits(14, [reserved]), bit[RE], bit[UE]))
+// #import "@preview/fletcher:0.5.8": diagram, node, edge
+// #draw(diagram(node((0, 0), [MCU]), edge("-|>"), node((1, 0), [Sensor])))
+
+= See also
+- #wlink("user-jinju")[About me]
+
+// = References
+// #references()
