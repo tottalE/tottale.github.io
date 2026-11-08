@@ -25,11 +25,28 @@ jobs:
       - name: Install Typst
         # HTML export 는 아직 실험 기능이라 버전마다 바뀔 수 있어서, 맥에서 쓰는 버전(0.15.1)으로 고정해요.
         env:
-          TYPST_URL: https://github.com/typst/typst/releases/download/v0.15.1/typst-x86_64-unknown-linux-musl.tar.xz
+          TYPST_TAG: v0.15.1
+          TYPST_FILE: typst-x86_64-unknown-linux-musl.tar.xz
+          GH_TOKEN: ${{ github.token }}
         run: |
-          # 다운로드 서버가 잠깐 안 될 때(504 등) 몇 번 다시 시도
-          curl -sSL --fail --retry 5 --retry-delay 10 --retry-all-errors -o "$RUNNER_TEMP/typst.tar.xz" "$TYPST_URL"
-          tar -xJf "$RUNNER_TEMP/typst.tar.xz" -C "$RUNNER_TEMP"
+          set -euo pipefail
+          # GitHub 다운로드 서버가 가끔 504 를 내서, 두 주소(API / 일반 링크)를 번갈아 가며
+          # 최대 12번(약 5분) 다시 시도해요.
+          auth="Authorization: Bearer $GH_TOKEN"
+          asset=$(curl -sSL --fail --retry 5 --retry-all-errors -H "$auth" \
+            "https://api.github.com/repos/typst/typst/releases/tags/$TYPST_TAG" \
+            | jq -r --arg f "$TYPST_FILE" '.assets[] | select(.name == $f) | .url')
+          direct="https://github.com/typst/typst/releases/download/$TYPST_TAG/$TYPST_FILE"
+          out="$RUNNER_TEMP/typst.tar.xz"
+          for i in $(seq 1 12); do
+            if curl -sSL --fail -H "$auth" -H "Accept: application/octet-stream" -o "$out" "$asset" \
+              || curl -sSL --fail -o "$out" "$direct"; then
+              break
+            fi
+            echo "download failed (try $i), waiting 20s..."
+            sleep 20
+          done
+          tar -xJf "$out" -C "$RUNNER_TEMP"
           echo "$RUNNER_TEMP/typst-x86_64-unknown-linux-musl" >> "$GITHUB_PATH"
 
       - name: Build
